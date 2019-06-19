@@ -344,43 +344,6 @@ class Layer:
 
         self.temp_goal_replay_storage.append(np.copy(transition))
 
-    def get_reward(self, new_goal, hindsight_goal, goal_thresholds):
-        """Return reward given provided goal and goal achieved in hindsight.
-
-        Parameters
-        ----------
-        new_goal : array_like
-            TODO
-        hindsight_goal : array_like
-            TODO
-        goal_thresholds : array_like
-            goal achievement thresholds. If the agent is within the threshold
-            for each dimension, the end goal has been achieved and the reward
-            of 0 is granted.
-
-        Returns
-        -------
-        float
-            reward value
-
-        Raises
-        ------
-        AssertionError
-            if the goal, hindsight goal, and goal thresholds do not have same
-            dimensions
-        """
-        assert len(new_goal) == len(hindsight_goal) == len(goal_thresholds), \
-            "Goal, hindsight goal, and goal thresholds do not have same " \
-            "dimensions"
-
-        # If the difference in any dimension is greater than threshold, goal
-        # not achieved
-        for i in range(len(new_goal)):
-            if np.absolute(new_goal[i]-hindsight_goal[i]) > goal_thresholds[i]:
-                return -1
-
-        # Else goal is achieved
-        return 0
 
     def finalize_goal_replay(self, goal_thresholds):
         """Finalize goal replay.
